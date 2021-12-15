@@ -4,7 +4,8 @@ from . import views
 from rest_framework.routers import DefaultRouter
 
 routers = DefaultRouter()
-routers.register('', views.RGBViewSet,basename='rgb')
+routers.register('rgb', views.RGBViewSet,basename='rgb')
+routers.register('dimmer', views.DimmerViewSet,basename='dimmer')
 
 
 
