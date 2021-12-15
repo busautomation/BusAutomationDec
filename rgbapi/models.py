@@ -9,9 +9,3 @@ class RGB(models.Model):
 
     def __str__(self):
         return self.device_name
-class Dimmer(models.Model):
-    device_name = models.CharField(max_length=100)
-    brightness = models.IntegerField()
-
-    def __str__(self):
-        return self.device_name
