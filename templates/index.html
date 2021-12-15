@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600&display=swap');
+    <style>@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600&display=swap');
 * {
     box-sizing: border-box;
     font-family: 'Rajdhani', sans-serif;
@@ -119,8 +118,7 @@ footer {
     align-items: center;
     justify-content: center;
     font-weight: 600;
-}
-    </style>
+}</style>
     <title>Rashail</title>
 </head>
 
@@ -134,55 +132,8 @@ footer {
     <main>
         <div class="container">
             <div class="row-1">
-                <div class="p10">
-                    <label for="p10-text">Text(Message)</label>
-                    <br>
-                    <input id="p10-text" type="text">
-
-                    <label for="p10-brightness">Brightness</label>
-                    <br>
-                    <input type="range" min="0" max="1023" value="512" class="slider" id="p10-brightness">
-
-                    <label for="p10-scroll-speed">Scroll Speed</label>
-                    <br>
-                    <input type="range" min="0" max="100" value="80" class="slider" id="p10-scroll-speed">
-
-                    <button class="p10-data-submit-btn">Submit</button>
-                </div>
-                <div class="rgb">
-                    <div class="color-pickers">
-                        <div class="color-box">
-                            <label for="rgb-1">RGB-1</label>
-                            <br>
-                            <input type="color" id="rgb-1">
-                        </div>
-                        <div class="color-box">
-                            <label for="rgb-2">RGB-2</label>
-                            <br>
-                            <input type="color" id="rgb-2">
-                        </div>
-                        <div class="color-box">
-                            <label for="rgb-3">RGB-3</label>
-                            <br>
-                            <input type="color" id="rgb-3">
-                        </div>
-                        <div class="color-box">
-                            <label for="rgb-4">RGB-4</label>
-                            <br>
-                            <input type="color" id="rgb-4">
-                        </div>
-                    </div>
-
-                    <label for="dimmer-1">Dimmer-1</label>
-                    <br>
-                    <input type="range" min="0" max="1023" value="512" class="slider" id="dimmer-1">
-
-                    <label for="dimmer-2">Dimmer-2</label>
-                    <br>
-                    <input type="range" min="0" max="100" value="80" class="slider" id="dimmer-2">
-
-                    <button class="rgb-data-submit-btn">Submit</button>
-                </div>
+                <div class="p10"></div>
+                <div class="rgb"></div>
             </div>
             <div class="row-2">
                 <div class="map">
@@ -194,6 +145,237 @@ footer {
     <footer>
         <p>Made by Rashail Tech Labs</p>
     </footer>
+    <script>// P10
+const p10 = document.querySelector('.p10')
+
+// fetching the data of P10 API
+fetch('https://ibsbus.herokuapp.com/p10api/1/')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        p10.innerHTML = `
+                    <label for="p10-text">Text(Message)</label>
+                    <br>
+                    <input id="p10-text" type="text" placeholder="${data.device_message}">
+
+                    <label for="p10-brightness">Brightness</label>
+                    <br>
+                    <input type="range" min="0" max="1023" value="${data.device_brightness}" class="slider" id="p10-brightness">
+
+                    <label for="p10-scroll-speed">Scroll Speed</label>
+                    <br>
+                    <input type="range" min="0" max="100" value="${data.device_scrolling_speed}" class="slider" id="p10-scroll-speed">
+
+                    <button class="p10-data-submit-btn">Submit</button>
+                `;
+        const p10DataSubmitBtn = document.querySelector('.p10-data-submit-btn')
+        const p10Text = document.querySelector('#p10-text')
+        const p10Brightness = document.querySelector('#p10-brightness')
+        const p10ScrollSpeed = document.querySelector('#p10-scroll-speed')
+
+        p10DataSubmitBtn.addEventListener('click', function() {
+            const current = data
+            const update = {
+                id: current.id,
+                device_name: current.device_name,
+                device_message: p10Text.value,
+                device_brightness: p10Brightness.value,
+                device_scrolling_speed: p10ScrollSpeed.value,
+            }
+
+            let url = `https://ibsbus.herokuapp.com/p10api/1/`
+            fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(update),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data)
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            console.log(p10Text.value)
+            console.log(p10Brightness.value)
+            console.log(p10ScrollSpeed.value)
+        })
+
+    })
+
+// function for converting rgb to hex
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+// function for converting hex to rgb
+function hexTorgb(hex) {
+    return ['0x' + hex[1] + hex[2] | 0, '0x' + hex[3] + hex[4] | 0, '0x' + hex[5] + hex[6] | 0];
+}
+
+
+
+// RGB + Dimmer
+const rgb = document.querySelector('.rgb')
+
+// fetching the data of RGB API
+fetch('https://ibsbus.herokuapp.com/rgbapi/rgb/')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        rgb.innerHTML = `
+                     <div class="color-pickers">
+                        <div class="color-box">
+                            <label for="rgb-1">RGB-1</label>
+                            <br>
+                            <input type="color" id="rgb-1" value="${rgbToHex(data[0].red, data[0].green, data[0].blue)}">
+                        </div>
+                        <div class="color-box">
+                            <label for="rgb-2">RGB-2</label>
+                            <br>
+                            <input type="color" id="rgb-2" value="${rgbToHex(data[1].red, data[1].green, data[1].blue)}">
+                        </div>
+                        <div class="color-box">
+                            <label for="rgb-3">RGB-3</label>
+                            <br>
+                            <input type="color" id="rgb-3" value="${rgbToHex(data[2].red, data[2].green, data[2].blue)}">
+                        </div>
+                        <div class="color-box">
+                            <label for="rgb-4">RGB-4</label>
+                            <br>
+                            <input type="color" id="rgb-4" value="${rgbToHex(data[3].red, data[3].green, data[3].blue)}">
+                        </div>
+                    </div>
+                `;
+        const rgbDataSubmitBtn = document.querySelector('.rgb-data-submit-btn')
+        const RGB1 = document.querySelector('#rgb-1')
+        const RGB2 = document.querySelector('#rgb-2')
+        const RGB3 = document.querySelector('#rgb-3')
+        const RGB4 = document.querySelector('#rgb-4')
+        const dimmer1 = document.querySelector('#dimmer-1')
+        const dimmer2 = document.querySelector('#dimmer-2')
+
+        RGB1.addEventListener('change', function() {
+            console.log("1 changed")
+            const current = data[0]
+            const update = {
+                id: current.id,
+                device_name: current.device_name,
+                red: hexTorgb(RGB1.value)[0],
+                green: hexTorgb(RGB1.value)[1],
+                blue: hexTorgb(RGB1.value)[2]
+            }
+
+            let url = `https://ibsbus.herokuapp.com/rgbapi/rgb/1/`
+            fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(update),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data)
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+        })
+
+        RGB2.addEventListener('change', function() {
+            const current = data[1]
+            const update = {
+                id: current.id,
+                device_name: current.device_name,
+                red: hexTorgb(RGB2.value)[0],
+                green: hexTorgb(RGB2.value)[1],
+                blue: hexTorgb(RGB2.value)[2]
+            }
+
+            let url = `https://ibsbus.herokuapp.com/rgbapi/rgb/2/`
+            fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(update),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data)
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+        })
+
+        RGB3.addEventListener('change', function() {
+            const current = data[2]
+            const update = {
+                id: current.id,
+                device_name: current.device_name,
+                red: hexTorgb(RGB3.value)[0],
+                green: hexTorgb(RGB3.value)[1],
+                blue: hexTorgb(RGB3.value)[2]
+            }
+
+            let url = `https://ibsbus.herokuapp.com/rgbapi/rgb/3/`
+            fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(update),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data)
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+        })
+
+        RGB4.addEventListener('change', function() {
+            const current = data[3]
+            const update = {
+                id: current.id,
+                device_name: current.device_name,
+                red: hexTorgb(RGB4.value)[0],
+                green: hexTorgb(RGB4.value)[1],
+                blue: hexTorgb(RGB4.value)[2]
+            }
+
+            let url = `https://ibsbus.herokuapp.com/rgbapi/rgb/4/`
+            fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(update),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data)
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+        })
+
+    })</script>
 </body>
 
 </html>
