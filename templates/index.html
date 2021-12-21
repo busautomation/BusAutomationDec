@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
@@ -261,7 +262,7 @@ label {
                 <div class="col-1-1">
                     <div class="fuel-card card">
                         <div class="icon">
-                            <img src="/Dashboard/drop.svg" alt="Fuel">
+                            <img src="<img src="{% static '/Dashboard/drop.svg' %}" alt="My image">" alt="Fuel">
                         </div>
                         <div class="info">
                             <div class="title">Fuel Meter</div>
@@ -271,7 +272,7 @@ label {
                     </div>
                     <div class="theft-card card">
                         <div class="icon">
-                            <img src="/alert.svg" alt="Theft Alert">
+                            <img src="{% static '/Dashboard/alert.svg' %}" alt="Theft Alert">
                         </div>
                         <div class="info">
                             <div class="title">Theft Alert</div>
@@ -294,7 +295,7 @@ label {
                 <div class="col-2-1">
                     <div class="air-card card">
                         <div class="icon">
-                            <img src="/Dashboard/thermometer.svg" alt="Theft Alert">
+                            <img src="{% static '/Dashboard/thermometer.svg' %}" alt="Theft Alert">
                         </div>
                         <div class="info">
                             <div class="title">Air Condi.</div>
@@ -304,7 +305,7 @@ label {
                     </div>
                     <div class="fire-card card">
                         <div class="icon">
-                            <img src="/Dashboard/fire.svg" alt="Theft Alert">
+                            <img src="{% static '/Dashboard/fire.svg' %}" alt="Theft Alert">
                         </div>
                         <div class="info">
                             <div class="title">Fire Hydrant</div>
