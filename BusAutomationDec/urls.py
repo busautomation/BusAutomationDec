@@ -24,5 +24,7 @@ urlpatterns = [
     path('p10api/',include('p10api.urls')),
     path('rgbapi/',include('rgbapi.urls')),
     path('a9glocationapi/',include('a9glocationapi.urls')),
+    path('BusStatusApi/',include('BusStatus.urls')),
+    
 
 ]

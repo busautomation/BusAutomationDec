@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'a9glocationapi',
     'rest_framework',
     'rest_framework.authtoken',
+    'BusStatus',
+    
     
 ]
 
