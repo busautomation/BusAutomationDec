@@ -6,7 +6,7 @@ from rest_framework.routers import DefaultRouter
 routers = DefaultRouter()
 routers.register('BusStatusApi', views.BusSatusDataViewSet,basename='BusStatusApi')
 routers.register('SensorDataApi', views.SensorDataViewSet,basename='SensorDataApi')
-
+routers.register('BusContactApi', views.BusContactViewSet,basename='BusContactApi')
 
 
 urlpatterns = [
