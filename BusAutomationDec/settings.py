@@ -95,11 +95,11 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'd2mkl5iboj21lb',
+        'NAME': 'd7sasde7h3r3ql',
 
-        'USER': 'iyopusgdrfogbl',
+        'USER': 'kovkojxrimawrb',
 
-        'PASSWORD': '131db62156fa13d82479fc195b451a68268423d65c1c2fa33001bfe1b06fc038',
+        'PASSWORD': '0f3bd17b43fbedce6bba91ba3e4281ea47b8d93b3b1fcdaaccaa112ca132dc01',
 
         'HOST': 'ec2-54-208-139-247.compute-1.amazonaws.com',
 
@@ -146,7 +146,7 @@ USE_TZ = True
 
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 django_heroku.settings(locals())
 # Default primary key field type
